@@ -1,4 +1,4 @@
-blueprint_app
-=============
+basic_app
+=========
 
-Blueprint App Example
+Basic App Deployment on WebFaction
