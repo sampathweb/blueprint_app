@@ -3,8 +3,8 @@
 # Credits: Adopted from http://community.webfaction.com/questions/12718/installing-flask
 
 # Step 1 - fill in these variables with your Application Name and URL Path:
-APPNAME="basic_app"
-URLPATH="/basic"
+APPNAME="blueprint_app"
+URLPATH="/blueprint"
 
 rm -r $HOME/webapps/$APPNAME/htdocs
 

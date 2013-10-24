@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 import os
+
 from flask.ext.script import Manager, Server
-from app import app, db
+from app import create_app, db
+
+env = os.environ.get('APPNAME_ENV', 'dev')
+app = create_app('app.settings.%sConfig' % env.capitalize(), env)
+app.debug = True
 
 manager = Manager(app)
 manager.add_command("runserver", \
-                    Server(use_debugger = True, use_reloader = True, port=5000))
-app.debug = True
-app.config['SQLALCHEMY_ECHO'] = True
+                    Server(use_debugger = True, use_reloader = True))
 
 @manager.shell
 def make_shell_context():

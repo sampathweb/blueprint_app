@@ -1,14 +1,33 @@
+#! ../env/bin/python
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
-# Config parameters
-SECRET_KEY = 'this is so secret?'
-SQLALCHEMY_DATABASE_URI = 'sqlite:///app_db.sqlite'
+db = SQLAlchemy()
 
-app = Flask(__name__)
-app.config.from_object(__name__)
+def create_app(object_name, env):
+    """
+    An flask application factory, as explained here:
+    http://flask.pocoo.org/docs/patterns/appfactories/
 
-# Intialize SQL Alchemy
-db = SQLAlchemy(app)
+    Arguments:
+        object_name: the python path of the config object,
+                     e.g. appname.settings.ProdConfig
 
-import views
+        env: The name of the current environment, e.g. prod or dev
+    """
+    app = Flask(__name__)
+
+    app.config.from_object(object_name)
+    app.config['ENV'] = env
+
+    #init SQLAlchemy
+    db.init_app(app)
+
+    # Register Blueprints
+    from tasks.views import tasks
+    app.register_blueprint(tasks)
+
+    from main.views import main
+    app.register_blueprint(main)
+
+    return app
