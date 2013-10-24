@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="pure-g-r l-box">
+<div class="pure-u-1-2">
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Task</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+        <tr>
+            <th>{{ task.title }}</th>
+            <th>{{ task.description }}</th>
+            <th><form action="{{ url_for('.delete', task_id=task.id) }}" method="post"><button type="submit" class="pure-button pure-button-warning">Delete</button></form></th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+
+<div class="pure-g-r l-box">
+<div class="pure-u-1-2">
+    <form action="{{ url_for('.index') }}" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.title(placeholder="Enter Task Name") }}
+    {{ form.description(placeholder="Enter Task Description") }}
+    <button type="submit" class="pure-button pure-button-success">Add</button>
+    </form>
+</div>
+</div>
+
+{% endblock body %}
